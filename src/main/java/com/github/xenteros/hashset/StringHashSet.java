@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 public class StringHashSet implements Set<String> {
 
     private List<List<String>> buckets;
+    private int currentSize = 0;
 
     public StringHashSet() {
         buckets = new ArrayList<>();
@@ -19,17 +20,31 @@ public class StringHashSet implements Set<String> {
 
     @Override
     public int size() {
-        return 0;
+//        int sum = 0;
+//
+//        for (List<String> bucket : this.buckets) {
+//            sum += bucket.size();
+//        }
+//
+//        return sum;
+
+        return this.currentSize;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.currentSize == 0;
     }
 
     @Override
     public boolean contains(Object o) {
-        return false;
+
+        int hash = o.hashCode();
+        int index = Math.abs(hash % this.buckets.size());
+
+        List<String> bucket = this.buckets.get(index);
+
+        return bucket.contains(o);
     }
 
     @Override
@@ -50,18 +65,27 @@ public class StringHashSet implements Set<String> {
     @Override
     public boolean add(String potencialMember) {
         int hash = potencialMember.hashCode();
-        int index = hash % this.buckets.size();
+        int index = Math.abs(hash % this.buckets.size());
         List<String> bucket = this.buckets.get(index);
         if (bucket.contains(potencialMember)) {
             return false;
         }
         bucket.add(potencialMember);
+        this.currentSize++;
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        return false;
+
+        int hash = o.hashCode();
+        int index = Math.abs(hash % this.buckets.size());
+
+        boolean result = this.buckets.get(index).remove(o);
+        if (result) {
+            this.currentSize--;
+        }
+        return result;
     }
 
     @Override
@@ -70,8 +94,19 @@ public class StringHashSet implements Set<String> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends String> c) {
-        return false;
+    public boolean addAll(Collection<? extends String> stringsToAdd) {
+
+        boolean changed = false;
+
+        for (String s : stringsToAdd) {
+            if (!this.contains(s)){
+                this.add(s);
+                this.currentSize++;
+                changed = true;
+            }
+        }
+
+        return changed;
     }
 
     @Override
@@ -86,7 +121,10 @@ public class StringHashSet implements Set<String> {
 
     @Override
     public void clear() {
-
+        for (List<String> bucket : this.buckets) {
+            bucket.clear();
+        }
+        this.currentSize = 0;
     }
 
     @Override
