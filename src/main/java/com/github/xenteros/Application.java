@@ -20,6 +20,8 @@ class Application {
         set.add("Marek");
         set.add("Marek");
 
+        set.removeIf(s -> s.startsWith("AA"));
+
         System.out.println(set);
     }
 
