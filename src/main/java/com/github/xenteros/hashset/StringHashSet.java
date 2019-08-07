@@ -98,11 +98,9 @@ public class StringHashSet implements Set<String> {
         for (String s : stringsToAdd) {
             if (!this.contains(s)) {
                 this.add(s);
-                this.currentSize++;
                 changed = true;
             }
         }
-
         return changed;
     }
 
@@ -184,7 +182,7 @@ public class StringHashSet implements Set<String> {
         for (int i = 0; i < newBucketSize; i++) {
             this.buckets.add(new ArrayList<>());
         }
-//        this.currentSize = 0;
+        this.currentSize = 0;
 
         for (List<String> oldBucket : oldBuckets) {
             this.addAll(oldBucket);
