@@ -1,6 +1,9 @@
 package com.github.xenteros;
 
+import com.github.xenteros.hashcollections.CustomHashMap;
+
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -11,6 +14,16 @@ class Application {
 
     public static void main(String[] args) {
 
+        Map<String, String> map = new CustomHashMap<>();
+
+        map.put("Jan", "Kowalski");
+        map.put("Danuta", "Nowak");
+
+//        map.put("asdadas", null);
+
+        System.out.println(map.get("Jan"));
+
+        System.out.println(map);
 
     }
 
