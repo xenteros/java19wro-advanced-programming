@@ -1,7 +1,5 @@
 package com.github.xenteros;
 
-import com.github.xenteros.hashset.StringHashSet;
-
 import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -13,16 +11,7 @@ class Application {
 
     public static void main(String[] args) {
 
-        Set<String> set = new StringHashSet();
-        set.add("Ala");
-        set.add("Alan");
-        set.add("Jakub");
-        set.add("Marek");
-        set.add("Marek");
 
-        set.removeIf(s -> s.startsWith("AA"));
-
-        System.out.println(set);
     }
 
     private static void experimentWithArrayList(int size) {

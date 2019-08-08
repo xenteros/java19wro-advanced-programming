@@ -1,4 +1,4 @@
-package com.github.xenteros.hashset;
+package com.github.xenteros.hashcollections;
 
 import org.junit.Test;
 
