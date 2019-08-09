@@ -1,9 +1,8 @@
 package com.github.xenteros;
 
-import com.github.xenteros.hashcollections.CustomHashMap;
+import com.github.xenteros.multithreading.Counter;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -14,16 +13,22 @@ class Application {
 
     public static void main(String[] args) {
 
-        Map<String, String> map = new CustomHashMap<>();
+        Counter one = new Counter("One");
+        Counter two = new Counter("Two");
 
-        map.put("Jan", "Kowalski");
-        map.put("Danuta", "Nowak");
+        Thread tOne = new Thread(one);
+        Thread tTwo = new Thread(two);
 
-//        map.put("asdadas", null);
+        tOne.setPriority(6);
+        tTwo.setPriority(5);
 
-        System.out.println(map.get("Jan"));
+        tOne.start();
+        tTwo.start();
 
-        System.out.println(map);
+        System.out.println(tOne.getPriority());
+        System.out.println(tTwo.getPriority());
+
+
 
     }
 
