@@ -10,6 +10,8 @@ class Match {
     private Team host;
     private Team away;
     private String result;
+//    private int hostScore;
+//    private int awayScore;
 
     public Match() {
     }
@@ -18,6 +20,29 @@ class Match {
         this.host = host;
         this.away = away;
         this.result = result;
+    }
+
+    public boolean has(Team team) {
+        return host.equals(team) || away.equals(team);
+    }
+
+    public int getPoints(Team team) {
+
+        if (!(this.has(team))) {
+            throw new RuntimeException();
+        }
+
+        String[] resultSplit = result.split(":");
+        int hostScore = Integer.parseInt(resultSplit[0]);
+        int awayScore = Integer.parseInt(resultSplit[1]);
+        if (hostScore == awayScore) {
+            return 1;
+        }
+        if (hostScore > awayScore) {
+            return host.equals(team) ? 3 : 0;
+        } else {
+            return away.equals(team) ? 3 : 0;
+        }
     }
 
     public Team getHost() {
