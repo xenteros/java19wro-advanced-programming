@@ -1,11 +1,11 @@
 package com.github.xenteros.football.league;
 
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -41,7 +41,7 @@ class League {
         }
 
         return scores.entrySet().stream()
-                .sorted(Comparator.comparingInt(Map.Entry::getValue))
+                .sorted(comparing(Map.Entry<Team, Integer>::getValue).reversed())
                 .map(Map.Entry::getKey)
                 .collect(toList());
     }

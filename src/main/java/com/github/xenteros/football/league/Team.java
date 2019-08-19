@@ -1,7 +1,6 @@
 package com.github.xenteros.football.league;
 
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -10,22 +9,15 @@ import java.util.List;
  */
 class Team {
 
+    private final int id;
     private List<String> players;
     private String name;
 
-    public Team() {
-    }
 
-    public Team(List<String> players, String name) {
+    public Team(int id, List<String> players, String name) {
+        this.id = id;
         this.players = players;
         this.name = name;
-    }
-
-    public static Team languages() {
-        Team team = new Team();
-        team.setName("languages");
-        team.setPlayers(Arrays.asList("Java", "Python", "C++"));
-        return team;
     }
 
     public List<String> getPlayers() {
