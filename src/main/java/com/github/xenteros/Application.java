@@ -1,7 +1,5 @@
 package com.github.xenteros;
 
-import com.github.xenteros.multithreading.Counter;
-
 import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -12,21 +10,6 @@ import static java.util.stream.Collectors.toSet;
 class Application {
 
     public static void main(String[] args) {
-
-        Counter one = new Counter("One");
-        Counter two = new Counter("Two");
-
-        Thread tOne = new Thread(one);
-        Thread tTwo = new Thread(two);
-
-        tOne.setPriority(6);
-        tTwo.setPriority(5);
-
-        tOne.start();
-        tTwo.start();
-
-        System.out.println(tOne.getPriority());
-        System.out.println(tTwo.getPriority());
 
 
 
