@@ -15,6 +15,12 @@ class LeagueManager {
         Team two = new Team(2, emptyList(),"two");
         Team three = new Team(3, emptyList(), "three");
 
+        Team four = Team.builder()
+                .id(4)
+                .name("four")
+                .players(emptyList())
+                .build();
+
         System.out.println(one.getName());
 
         FileManager.dumpTeamsToFile(Arrays.asList(one, two, three));

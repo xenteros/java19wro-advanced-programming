@@ -10,9 +10,8 @@ import static java.util.stream.Collectors.toSet;
 class Application {
 
     public static void main(String[] args) {
-
-
-
+        System.out.println(Integer.valueOf(1000) == Integer.valueOf(1000));
+        System.out.println(Integer.valueOf(10) == Integer.valueOf(10));
     }
 
     private static void experimentWithArrayList(int size) {

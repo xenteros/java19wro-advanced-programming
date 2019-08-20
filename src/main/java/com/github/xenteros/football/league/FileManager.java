@@ -21,7 +21,7 @@ class FileManager {
                 .withIgnoreLeadingWhiteSpace(true)
                 .withQuoteChar('"')
                 .withSeparator(';');
-​
+
         CSVReaderBuilder readerBuilder = new CSVReaderBuilder(new FileReader("teams.csv")).withCSVParser(parserBuilder.build());
         CSVReader reader = readerBuilder.build();
         return reader.readAll().stream()
