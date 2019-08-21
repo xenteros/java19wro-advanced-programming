@@ -74,14 +74,14 @@ class FileManager {
     }
 
     private static String[] matchToArray(Match match) {
-        return new String[] {
-                match.getHost().getName(),
-                match.getAway().getName(),
+        return new String[]{
+                String.valueOf(match.getHost().getId()),
+                String.valueOf(match.getAway().getId()),
                 match.getResult()};
     }
 
     private static String[] teamToArray(Team team) {
-        return new String[] {
+        return new String[]{
                 String.valueOf(team.getId()),
                 team.getName(),
                 String.join(",", team.getPlayers())
