@@ -6,9 +6,11 @@ import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
 import lombok.extern.log4j.Log4j;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,32 @@ import static java.util.stream.Collectors.toList;
 
 @Log4j
 class FileManager {
+
+    public static List<League> readLeaguesFromFile() throws FileNotFoundException { // TODO: 21.08.2019 możesz potrzebować więcej argumentów (mapy)
+        CSVParserBuilder parserBuilder = new CSVParserBuilder() // parser builder do parametrów
+                .withEscapeChar('\\')
+                .withIgnoreLeadingWhiteSpace(true)
+                .withQuoteChar('"')
+                .withSeparator(';');
+
+        CSVReaderBuilder readerBuilder = new CSVReaderBuilder(new FileReader("leagues.csv")).withCSVParser(parserBuilder.build());
+        CSVReader reader = readerBuilder.build();
+
+        // TODO: 21.08.2019 reszta
+        throw new UnsupportedOperationException();
+    }
+
+    public static void dumpLeaguesToFile(List<League> leagues) throws IOException {
+        CSVWriter writer = new CSVWriter(
+                new FileWriter("leagues.csv"),
+                ';',
+                '"',
+                '\\',
+                "\n");
+
+        // TODO: 21.08.2019 reszta
+
+    }
 
     public static List<Team> readTeamsFromFile() throws IOException {
         CSVParserBuilder parserBuilder = new CSVParserBuilder() // parser builder do parametrów
@@ -98,7 +126,8 @@ class FileManager {
         if (host == null) {
             log.error(String.format("Host with id %d not found.", hostId));
             throw new RuntimeException("Host not found");
-        } if (away == null) {
+        }
+        if (away == null) {
             log.error(String.format("Away with id %d not found.", awayId));
             throw new RuntimeException("Away not found");
         }
@@ -121,4 +150,40 @@ class FileManager {
         List<String> players = Arrays.asList(row[2].split(","));
         return new Team(id, players, teamName);
     }
+
+    private static String[] leagueToArray(League league) {
+        List<String> teamIds = null; // TODO: 21.08.2019  league.getTeams() -> 1,2,3 -> "1", "2", "3"
+        List<String> matchIds = null; // TODO: 21.08.2019
+
+        teamIds = league.getTeams().stream()
+                .map(team -> team.getId())
+                .map(id -> String.valueOf(id))
+                .collect(toList());
+        matchIds = league.getMatches().stream()
+                .map(match -> String.valueOf(match.getId()))
+                .collect(toList());
+
+        // TODO: 21.08.2019 zwróć tablicę, składającą się z dwóch napisów
+
+        return new String[]{
+                String.join(",", teamIds),
+                String.join(",", matchIds)
+        };
+    }
+
+    private static League arrayToLeague(String[] row, Map<Integer, Team> availableTeams, Map<Integer, Match> availableMatches) {
+
+        List<Integer> teamIds = Arrays.stream(row[0].split(",")).map(Integer::parseInt).collect(toList());
+        List<Integer> matchIds = Arrays.stream(row[1].split(",")).map(Integer::parseInt).collect(toList());
+
+        List<Team> teams = new ArrayList<>();
+        List<Match> matches = new ArrayList<>();
+
+        // TODO: 21.08.2019 zaimplementuj pętlę, w której dla każdego id w teamIds dodasz odpowiedni team do teams
+
+        // TODO: 21.08.2019 zaimplementuj pętlę, w której dla każdego id w matchIds dodasz odpowiedni match do matches
+
+        return new League(teams, matches);
+    }
+
 }
