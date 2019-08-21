@@ -4,15 +4,18 @@ import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
+import lombok.extern.log4j.Log4j;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.stream.Collectors.toList;
 
+@Log4j
 class FileManager {
 
     public static List<Team> readTeamsFromFile() throws IOException {
@@ -63,14 +66,16 @@ class FileManager {
         writer.close();
     }
 
-    public static List<String[]> readCSVFile() throws IOException {
+    public static List<Match> readMatchesFromFile(Map<Integer, Team> availableTeams) throws IOException {
         CSVReader reader = new CSVReader(
                 new FileReader("matches.csv"),
                 ';',
                 '"',
                 '\\'
         );
-        return reader.readAll();
+        return reader.readAll().stream()
+                .map(row -> arrayToMatch(row, availableTeams))
+                .collect(toList());
     }
 
     private static String[] matchToArray(Match match) {
@@ -78,6 +83,26 @@ class FileManager {
                 String.valueOf(match.getHost().getId()),
                 String.valueOf(match.getAway().getId()),
                 match.getResult()};
+    }
+
+    private static Match arrayToMatch(String[] row, Map<Integer, Team> availableTeams) {
+        int hostId = Integer.parseInt(row[0]);
+        int awayId = Integer.parseInt(row[1]);
+        String score = row[2];
+
+        Team host = availableTeams.get(hostId);
+        Team away = availableTeams.get(awayId);
+
+        if (host == null) {
+            log.error(String.format("Host with id %d not found.", hostId));
+            throw new RuntimeException("Host not found");
+        } if (away == null) {
+            log.error(String.format("Away with id %d not found.", awayId));
+            throw new RuntimeException("Away not found");
+        }
+
+        return new Match(host, away, score);
+
     }
 
     private static String[] teamToArray(Team team) {

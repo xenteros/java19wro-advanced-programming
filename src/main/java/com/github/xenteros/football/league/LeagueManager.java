@@ -3,6 +3,9 @@ package com.github.xenteros.football.league;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static java.util.Collections.emptyList;
 
@@ -14,16 +17,13 @@ class LeagueManager {
         Team one = new Team(1, emptyList(), "on\"e");
         Team two = new Team(2, emptyList(),"two");
         Team three = new Team(3, emptyList(), "three");
-
         Team four = Team.builder()
                 .id(4)
                 .name("four")
                 .players(emptyList())
                 .build();
 
-        System.out.println(one.getName());
-
-        FileManager.dumpTeamsToFile(Arrays.asList(one, two, three));
+        List<Team> teams = Arrays.asList(one, two, three, four);
 
         List<Match> matches = Arrays.asList(
                 new Match(one, two, "1:2"),
@@ -33,8 +33,19 @@ class LeagueManager {
                 new Match(two, one, "1:3"),
                 new Match(one, two, "1:4")
         );
-//        dumpMatchesToFile(matches);
-        FileManager.readCSVFile().forEach(array -> System.out.println(Arrays.toString(array)));
+
+        FileManager.dumpTeamsToFile(teams);
+        FileManager.dumpMatchesToFile(matches);
+
+        List<Team> restoredTeams = FileManager.readTeamsFromFile();
+
+        Map<Integer, Team> teamsById = restoredTeams.stream()
+                .collect(Collectors.toMap(Team::getId, Function.identity()));
+
+        List<Match> restoredMatches = FileManager.readMatchesFromFile(teamsById);
+
+        restoredMatches.forEach(System.out::println);
+
     }
 
 
