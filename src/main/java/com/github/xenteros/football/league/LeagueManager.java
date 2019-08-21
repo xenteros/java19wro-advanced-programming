@@ -26,12 +26,12 @@ class LeagueManager {
         List<Team> teams = Arrays.asList(one, two, three, four);
 
         List<Match> matches = Arrays.asList(
-                new Match(one, two, "1:2"),
-                new Match(one, two, "1:3"),
-                new Match(one, three, "2:3"),
-                new Match(two, three, "4:3"),
-                new Match(two, one, "1:3"),
-                new Match(one, two, "1:4")
+                new Match(1, one, two, "1:2"),
+                new Match(2, one, two, "1:3"),
+                new Match(3, one, three, "2:3"),
+                new Match(4, two, three, "4:3"),
+                new Match(5, two, one, "1:3"),
+                new Match(6, one, two, "1:4")
         );
 
         FileManager.dumpTeamsToFile(teams);

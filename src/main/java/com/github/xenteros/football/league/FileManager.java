@@ -80,15 +80,17 @@ class FileManager {
 
     private static String[] matchToArray(Match match) {
         return new String[]{
+                String.valueOf(match.getId()),
                 String.valueOf(match.getHost().getId()),
                 String.valueOf(match.getAway().getId()),
                 match.getResult()};
     }
 
     private static Match arrayToMatch(String[] row, Map<Integer, Team> availableTeams) {
-        int hostId = Integer.parseInt(row[0]);
-        int awayId = Integer.parseInt(row[1]);
-        String score = row[2];
+        int id = Integer.parseInt(row[0]);
+        int hostId = Integer.parseInt(row[1]);
+        int awayId = Integer.parseInt(row[2]);
+        String score = row[3];
 
         Team host = availableTeams.get(hostId);
         Team away = availableTeams.get(awayId);
@@ -101,7 +103,7 @@ class FileManager {
             throw new RuntimeException("Away not found");
         }
 
-        return new Match(host, away, score);
+        return new Match(id, host, away, score);
 
     }
 
