@@ -1,5 +1,6 @@
 package com.github.xenteros.football.league;
 
+import com.github.xenteros.misc.DecipherFileReader;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -56,7 +57,7 @@ class FileManager {
                 .withQuoteChar('"')
                 .withSeparator(';');
 
-        CSVReaderBuilder readerBuilder = new CSVReaderBuilder(new FileReader("teams.csv")).withCSVParser(parserBuilder.build());
+        CSVReaderBuilder readerBuilder = new CSVReaderBuilder(new DecipherFileReader("teams.csv", null)).withCSVParser(parserBuilder.build());
         CSVReader reader = readerBuilder.build();
         return reader.readAll().stream()
                 .map(FileManager::arrayToTeam)

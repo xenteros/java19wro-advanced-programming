@@ -1,50 +1,53 @@
 package com.github.xenteros.football.league;
 
+import lombok.extern.log4j.Log4j;
+
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.Scanner;
+import java.util.UUID;
 
-import static java.util.Collections.emptyList;
 
+@Log4j
 class LeagueManager {
 
+    private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
 
-        Team one = new Team(1, emptyList(), "on\"e");
-        Team two = new Team(2, emptyList(),"two");
-        Team three = new Team(3, emptyList(), "three");
-        Team four = Team.builder()
-                .id(4)
-                .name("four")
-                .players(emptyList())
-                .build();
+//        Team one = new Team(1, emptyList(), "druzyna");
+//        Team two = new Team(2, emptyList(), "druzyna2");
+//
+//        FileManager.dumpTeamsToFile(Arrays.asList(one, two));
+//        List<Team> teams = FileManager.readTeamsFromFile();
+//        teams.forEach(System.out::println);
 
-        List<Team> teams = Arrays.asList(one, two, three, four);
+        char[] mycbuf = new char[100];
+        System.out.println(foo(mycbuf, 0, 50));
+        System.out.println(Arrays.toString(mycbuf));
 
-        List<Match> matches = Arrays.asList(
-                new Match(1, one, two, "1:2"),
-                new Match(2, one, two, "1:3"),
-                new Match(3, one, three, "2:3"),
-                new Match(4, two, three, "4:3"),
-                new Match(5, two, one, "1:3"),
-                new Match(6, one, two, "1:4")
-        );
+    }
 
-        FileManager.dumpTeamsToFile(teams);
-        FileManager.dumpMatchesToFile(matches);
+    private static int foo(char[] cbuf, int off, int len) {
+        StringBuilder sb = new StringBuilder();
+        while (sb.length() <= len) {
+            sb.append(UUID.randomUUID().toString());
+        }
+        String decrypted = sb.toString();
 
-        List<Team> restoredTeams = FileManager.readTeamsFromFile();
+        for (int i = 0; i < len; i++) {
+            cbuf[off + i] = decrypted.charAt(i);
+        }
 
-        Map<Integer, Team> teamsById = restoredTeams.stream()
-                .collect(Collectors.toMap(Team::getId, Function.identity()));
+        return len;
+    }
 
-        List<Match> restoredMatches = FileManager.readMatchesFromFile(teamsById);
 
-        restoredMatches.forEach(System.out::println);
+    private static void createTeam() {
+        //tutaj wczytywanie wszystkich parametrów zespołu
+    }
+
+    private static void createMatch() {
 
     }
 
