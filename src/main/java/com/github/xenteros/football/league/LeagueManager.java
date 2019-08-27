@@ -15,6 +15,17 @@ class LeagueManager {
 
     public static void main(String[] args) throws IOException {
 
+        int desiredLength = 10_000;
+
+        StringBuilder sb = new StringBuilder();
+        while (sb.length() < desiredLength) {
+            sb.append(UUID.randomUUID().toString().replace("-",""));
+        }
+        String key = sb.substring(0, desiredLength);
+
+        System.out.println(key);
+
+
 //        Team one = new Team(1, emptyList(), "druzyna");
 //        Team two = new Team(2, emptyList(), "druzyna2");
 //

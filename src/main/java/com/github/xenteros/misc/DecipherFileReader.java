@@ -1,5 +1,7 @@
 package com.github.xenteros.misc;
 
+import org.jasypt.util.text.BasicTextEncryptor;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,9 +21,12 @@ public class DecipherFileReader extends Reader {
 
         String line = null;
 
+        BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
+        textEncryptor.setPassword(key);
+
         while ((line = this.bufferedReader.readLine()) != null) {
-            // TODO: 23.08.2019 "Tutaj trzeba będzie trzeba odszyfrować linijkę przed dodaniem do linijek
-            lines.add(line);
+
+            lines.add(textEncryptor.decrypt(line));
         }
         decrypted = String.join("\n", lines) + "\n";
     }
